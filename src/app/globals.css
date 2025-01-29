@@ -1,21 +1,93 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+::-webkit-scrollbar {
+  @apply w-1.5;
 }
 
-@media (prefers-color-scheme: dark) {
+::-webkit-scrollbar-track {
+  @apply bg-muted;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-500;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #357abd;
+}
+
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --header: #fff;
+    --background: #f9f9f9;
+    --foreground: #4c4c4c;
+
+    --card: #ffffff;
+    --card-foreground: #4c4c4c;
+
+    --popover: #ffffff;
+    --popover-foreground: --primary: #f76f00;
+
+    --primary: #0038ae;
+    --primary-foreground: #e2e2e2;
+
+    --secondary: #f4f6fb;
+    --secondary-foreground: #5a5a5a;
+
+    --muted: #eeeeee;
+    --muted-foreground: #3f3f3f;
+
+    --accent: #eeeeee;
+    --accent-foreground: #5a5a5a;
+
+    --destructive: #cf2a2a;
+    --destructive-foreground: #e2e2e2;
+
+    --border: #dfdfdf;
+    --input: #dfdfdf;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --header: #fff;
+    --background: #030712;
+    --foreground: #e2e2e2;
+
+    --card: #10141e;
+    --card-foreground: #e2e2e2;
+
+    --popover: #4c4c4c;
+    --popover-foreground: #e2e2e2;
+
+    --primary: #0038ae;
+    --primary-foreground: #e2e2e2;
+
+    --secondary: #2d2d2d;
+    --secondary-foreground: #e2e2e2;
+
+    --muted: #2d2d2d;
+    --muted-foreground: #5a5a5a;
+
+    --accent: #1f2937;
+    --accent-foreground: #e2e2e2;
+
+    --destructive: #cf2a2a;
+    --destructive-foreground: #e2e2e2;
+
+    --border: #1f2937;
+    --input: #334155;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply font-poppins bg-background text-foreground;
+  }
 }
