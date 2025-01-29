@@ -1,6 +1,7 @@
 export default {
   STORE: {
     BASE: "/",
+    CATALOG: "/catalog",
 
     AUTH: {
       LOGIN: "/login",
