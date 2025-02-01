@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import type { Metadata } from "next";
 import Providers from "./providers";
 import "./globals.css";
+import DemoAnnouncement from "@/components/common/demoAnnouncement";
 
 export const metadata: Metadata = {
   title: {
@@ -19,6 +20,7 @@ const RootLayout = ({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
+        <DemoAnnouncement />
         <Providers>{children}</Providers>
       </body>
     </html>
