@@ -16,6 +16,7 @@ import {
   Twitter,
   Youtube,
 } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 const MenuItem = (item: { title: string; items: any }) => {
   return (
@@ -37,8 +38,10 @@ const MenuItem = (item: { title: string; items: any }) => {
     </div>
   );
 };
+
 const Footer = () => {
   const [isActive, setIsActive] = useState(false);
+  const pathname = usePathname();
 
   const SocialLinks: {
     id: number;
@@ -190,11 +193,15 @@ const Footer = () => {
     });
   }, []);
 
+  useEffect(() => {
+    scrollToTop();
+  }, [pathname]);
+
   return (
     <>
       <footer className="flex flex-col gap-20 bg-accent p-8">
-        <div className="grid grid-cols-5 items-start place-items-center gap-4">
-          <div className="">
+        <div className="grid sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-5 items-start place-items-start sm:place-content-center gap-8 sm:gap-4">
+          <div className="hidden xl:block">
             <Logo />
           </div>
           {MenuItems.map((item) => {
@@ -203,8 +210,8 @@ const Footer = () => {
             );
           })}
         </div>
-        <div className="relative flex items-center justify-between">
-          <div className="flex items-center">
+        <div className="relative flex flex-col-reverse md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center text-sm">
             <p>&copy; {new Date().getFullYear()}. All right reserved.</p>
           </div>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden lg:flex items-center justify-center gap-2">
@@ -230,8 +237,8 @@ const Footer = () => {
               height={25}
               quality={75}
               className="object-contain"
-              priority
               alt="Payment Banner"
+              priority
             />
           </div>
         </div>

@@ -1,9 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import paths from "@/lib/paths";
 import { cn } from "@/lib/utils";
-
+import _ from "lodash";
+import { useQuery } from "@tanstack/react-query";
 import { SearchIcon } from "lucide-react";
 
 const SearchBar = () => {
@@ -19,9 +22,25 @@ const SearchBar = () => {
     }
   };
 
+  const {
+    data: searchResults,
+    isPending: srIsPending,
+    isLoading: srIsLoading,
+    refetch: srRefetch,
+  } = useQuery({
+    queryKey: ["search", searchValue],
+    queryFn: () =>
+      fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/products/search?q=${searchValue}&limit=5`,
+      ).then((res) => res.json()),
+    enabled: !!searchValue.length,
+  });
+
   useEffect(() => {
-    searchValue ? setResultBarIsActive(true) : setResultBarIsActive(false);
-  }, [searchValue]);
+    if (searchResults?.products.length) {
+      setResultBarIsActive(true);
+    }
+  }, [searchValue, searchResults]);
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutSide);
@@ -29,7 +48,7 @@ const SearchBar = () => {
   }, []);
 
   return (
-    <div className="relative mx-2" ref={searchRef}>
+    <div className="relative" ref={searchRef}>
       <div className="relative">
         <input
           type="text"
@@ -45,22 +64,47 @@ const SearchBar = () => {
           <SearchIcon />
         </button>
       </div>
-      <ul
+      <div
         className={cn(
-          "absolute bg-header top-12 left-0 w-full rounded-sm rounded-t-none border border-t-0 p-2 invisible opacity-0 transition-all",
+          "absolute bg-header top-12 left-0 w-full rounded-sm rounded-t-none border border-t-0 p-2 invisible opacity-0 space-y-2 transition-all",
           resultBarIsActive && "visible opacity-100 border-primary",
         )}
       >
-        <li>
-          <Link href={`/ara?q=${searchValue}`}>dsadsasadsad</Link>
-        </li>
-        <li>
-          <Link href={`/ara?q=${searchValue}`}>dsadsasadsad</Link>
-        </li>
-        <li>
-          <Link href={`/ara?q=${searchValue}`}>dsadsasadsad</Link>
-        </li>
-      </ul>
+        {!searchResults?.products.length ? (
+          <p>No result found</p>
+        ) : (
+          searchResults?.products.map((product: any) => {
+            return (
+              <div key={product.id}>
+                <Link
+                  href={`${paths.STORE.PRODUCT_DETAIL}/${_.kebabCase(product?.title).toLocaleLowerCase()}--${product?.id}`}
+                  className="flex items-center hover:bg-muted gap-2 transition-colors p-2"
+                  onClick={() => {
+                    setSearchValue("");
+                  }}
+                >
+                  <Image
+                    src={product?.thumbnail}
+                    width={50}
+                    height={50}
+                    className="object-contain bg-muted"
+                    alt={product?.title}
+                  />
+                  <h4>{product?.title}</h4>
+                </Link>
+              </div>
+            );
+          })
+        )}
+        {searchResults?.products.length ? (
+          <a
+            href={`/search?q=${searchValue}`}
+            className="p-2 block bg-accent text-primary text-center"
+          >
+            View All
+          </a>
+        ) : null}
+      </div>
     </div>
   );
 };

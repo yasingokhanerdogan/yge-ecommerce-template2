@@ -5,7 +5,7 @@ const StoreLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div>
       <Header />
-      <div className="min-h-[80vh] p-8">{children}</div>
+      <div className="min-h-[65vh] p-4 md:p-8">{children}</div>
       <Footer />
     </div>
   );

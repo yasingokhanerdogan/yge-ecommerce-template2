@@ -17,12 +17,7 @@ export const CardHeader = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLElement>) => {
-  return (
-    <header
-      className={cn("flex flex-col space-y-1.5 p-4", className)}
-      {...props}
-    />
-  );
+  return <header className={cn("p-4", className)} {...props} />;
 };
 
 export const CardTitle = ({

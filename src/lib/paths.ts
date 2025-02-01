@@ -2,6 +2,7 @@ export default {
   STORE: {
     BASE: "/",
     CATALOG: "/catalog",
+    PRODUCT_DETAIL: "/product",
 
     AUTH: {
       LOGIN: "/login",
@@ -10,10 +11,9 @@ export default {
     },
 
     ACCOUNT: {
-      BASE: "/account",
-      FAVORITES: "/account/favorites",
-      ORDERS: "/account/orders",
-      SETTINGS: "/account/settings",
+      FAVORITES: "/favorites",
+      ORDERS: "/orders",
+      SETTINGS: "/settings",
     },
 
     PRODUCT: "/product",
